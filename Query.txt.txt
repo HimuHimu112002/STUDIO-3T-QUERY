@@ -24,29 +24,29 @@ db.getCollection("employee").insertMany(
 ]
 )
 
-================== 3
+====================== 3
 db.getCollection("employee").find()
 
-================== 4
+====================== 4
 db.getCollection("employee").aggregate([])
 
-================== 5
+====================== 5
 db.getCollection("employee").find().count("total")
 
-==================== 6
+====================== 6
 db.getCollection("employee").aggregate([{$count:"total"}])// total collection 
 
-==================== 7
+====================== 7
 db.getCollection("employee").aggregate([{$sort:{roll:-1}}]) //dessending order
 
-==================== 8
+====================== 8
 db.getCollection("employee").aggregate([{$sort:{roll:1}}])// assending order
 
-==================== 9
+====================== 9
 db.getCollection("employee").aggregate([{$limit:2}])
 db.getCollection("employee").find.limit(2)
 
-===================== 10
+====================== 10
 
 db.getCollection("employee").aggregate(
     [
@@ -57,3 +57,115 @@ db.getCollection("employee").aggregate(
 
     ]
 )
+
+
+======================= 11
+db.employee.aggregate(
+[
+
+{$match:
+    {
+        $and:[
+            {roll:{$gt:"01"}},
+            {city: "Dhaka"}
+        ]
+}}
+])
+
+====================== 12
+db.employee.find(
+
+    {
+        $and:[
+            {roll:{$gt:"01"}},
+            {city: "Dhaka"}
+        ]
+    }
+)
+========================= 13
+db.employee.find(
+
+    {
+        $or:[
+            {roll:{$gt:"01"}},
+            {city: "Dhaka"}
+        ]
+    }
+)
+
+========================= 14
+db.employee.aggregate([
+
+{$match:{name:/H/}} // akhane /H/ mane holo H er moto jeguli sei value guli print korbe
+
+])
+db.employee.find({name:/H/})
+
+========================== 15
+db.employee.aggregate([{
+    $match:{roll:{$in:["01", "03"]}}
+}])
+db.employee.find({roll:{$in:["01", "03"]}})
+
+========================== 16
+db.employee.aggregate([{
+    $project:{roll:1,name:1} // sudhu roll and name show korbe baki value guli show korbena
+}])
+db.employee.find({},{roll:1,name:1})
+
+========================== 17
+db.employee.aggregate([
+{$skip:1},
+{$limit:2}
+
+]) 
+db.employee.find({}).skip(1),limit(2)
+
+// limit 2 mane 2ta collection show korbe r jodi skip 1 dei tahole first 1ta collection hide hobe baki 2ta show korbe skip value ja dibo tar por theke limit jeto guli value deoya thakbe toto guli value show korbe
+
+
+========================= 18
+db.employee.aggregate([{
+    $group:{_id:"$roll"}
+}])// akhane jei row ke group korbo sei row er majhe unic value guli show korbe duplicate value show korbena
+
+=========================== 19
+db.employee.aggregate([{
+    $group:{_id:"$name", total:{$sum:"$roll"}}}
+])
+// akhane akti group kore tader total akti hisab kora jai
+
+============================== 20
+db.employee.aggregate([{
+    $group:{_id:"$name", total:{$avg:"$roll"}}}
+])akhane akti group kore tader total akti avg hisab kora jai
+
+=============================== 21
+db.employee.aggregate([{
+    $group:{_id:"$name", total:{$max:"$roll"}}}
+])
+
+=============================== 22
+db.employee.aggregate([{
+    $group:{_id:"$name", total:{$min:"$roll"}}}
+])
+
+=============================== 23
+db.employee.aggregate([{
+    $group:{_id:0, max:{$max:"$roll"}}}
+])// total collection theke max value return 
+
+=============================== 24
+db.employee.aggregate([{
+    $group:{_id:0,min:{$min:"$roll"}}}
+])
+
+================================ 25
+db.employee.aggregate([{
+    $group:{_id:0,avg:{$avg:"$roll"}}}
+])
+
+================================= 26
+db.employee.aggregate([{
+    $group:{_id:0,sum:{$sum:"$roll"}}}
+]) 
