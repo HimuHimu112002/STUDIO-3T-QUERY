@@ -1,0 +1,59 @@
+========================== 1
+db.getCollection("employee").insert({
+    name:"Himu",
+    roll:"01",
+    class:"University",
+    city:"Dhaka"
+})
+
+========================== 2 
+db.getCollection("employee").insertMany(
+[
+{
+    name:"Himu",
+    roll:"02",
+    class:"University",
+    city:"Dhaka"
+},
+{
+    name:"Himu",
+    roll:"03",
+    class:"University",
+    city:"Dhaka"
+}
+]
+)
+
+================== 3
+db.getCollection("employee").find()
+
+================== 4
+db.getCollection("employee").aggregate([])
+
+================== 5
+db.getCollection("employee").find().count("total")
+
+==================== 6
+db.getCollection("employee").aggregate([{$count:"total"}])// total collection 
+
+==================== 7
+db.getCollection("employee").aggregate([{$sort:{roll:-1}}]) //dessending order
+
+==================== 8
+db.getCollection("employee").aggregate([{$sort:{roll:1}}])// assending order
+
+==================== 9
+db.getCollection("employee").aggregate([{$limit:2}])
+db.getCollection("employee").find.limit(2)
+
+===================== 10
+
+db.getCollection("employee").aggregate(
+    [
+
+        {$match:{roll:{$gt:"01"}}},
+        {$match:{city:"Dhaka"}},
+        {$match:{roll:"02"}}
+
+    ]
+)
