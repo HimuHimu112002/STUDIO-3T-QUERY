@@ -204,3 +204,15 @@ db.employee.aggregate([
     }
     
 ]) // collection er vhitore theke roll ke string theke int convert korar way
+
+=============================== 31
+db.employee.aggregate([
+    {$match:{roll:"01"}},
+    {$addFields:{"New":"Aktarujjaman"}},
+    {$addFields:{"New":"$roll"}},
+    {$addFields:{"New":{$add:[2 + 2]}}},
+    {$addFields:{"New":{$sum:[2,2,2,2,2]}}},
+    {$addFields:{"New":{$divide:[10,2]}}},
+    {$addFields:{"New":{$multiply:[20,20]}}},
+
+])// add new fields
