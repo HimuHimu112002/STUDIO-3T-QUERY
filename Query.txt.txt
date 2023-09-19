@@ -106,7 +106,7 @@ db.employee.aggregate([{
     $match:{roll:{$in:["01", "03"]}}
 }])
 db.employee.find({roll:{$in:["01", "03"]}})
-
+// roll er upore depend kore jei roll match korbe sei guli show korbe
 ========================== 16
 db.employee.aggregate([{
     $project:{roll:1,name:1} // sudhu roll and name show korbe baki value guli show korbena
@@ -138,17 +138,17 @@ db.employee.aggregate([{
 ============================== 20
 db.employee.aggregate([{
     $group:{_id:"$name", total:{$avg:"$roll"}}}
-])akhane akti group kore tader total akti avg hisab kora jai
+]) //akhane akti group kore tader total akti avg hisab kora jai
 
 =============================== 21
 db.employee.aggregate([{
     $group:{_id:"$name", total:{$max:"$roll"}}}
-])
+]) // name er upore depend kore max roll show korbe
 
 =============================== 22
 db.employee.aggregate([{
     $group:{_id:"$name", total:{$min:"$roll"}}}
-])
+]) // name er upore depend kore min roll show korbe
 
 =============================== 23
 db.employee.aggregate([{
@@ -169,3 +169,38 @@ db.employee.aggregate([{
 db.employee.aggregate([{
     $group:{_id:0,sum:{$sum:"$roll"}}}
 ]) 
+
+================================== 27
+db.employee.aggregate([{
+    $group:{_id:{name:"$name", roll:"$roll"}},
+    avg:{$avg:"$roll"}
+}]) // akhane just name and roll asbe collection theke baki property and value asbena
+
+=================================== 28
+db.products.getCollection([
+	{$lookup: {from: "categories", localField: "CategoryID", foreighField: "CategoryID", as: "Category"}},
+]) // akti table er sathe others table add kora
+
+=================================== 29
+db.employee.aggregate([
+    {
+        $facet:{
+            "total":[{$count:"total"}], // employee koto guli row ase count dekhabe
+             "data":[], // employee all data show korbe
+            "Himu":[{$match:{"roll": "03"}}] // jei row match korbe just sei row show korbe
+        }
+    }
+])
+
+================================== 30
+db.employee.aggregate([
+    {
+        
+        $project:{
+            _id:0,
+            name:1,
+            roll:{$toInt:"$roll"}
+        }
+    }
+    
+]) // collection er vhitore theke roll ke string theke int convert korar way
