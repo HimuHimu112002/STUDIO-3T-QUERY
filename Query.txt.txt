@@ -216,3 +216,30 @@ db.employee.aggregate([
     {$addFields:{"New":{$multiply:[20,20]}}},
 
 ])// add new fields
+
+=============================== 32
+db.employee.aggregate([
+    {$addFields:{"new":{$concat:['$name','$roll']}}}
+])
+
+================================= 33
+db.employee.aggregate([
+    {$match:{roll:"01"}},
+    {$addFields:{"new":{$split:['$name',',']}}}
+])
+
+db.employee.aggregate([
+    {$match:{roll:"01"}},
+    {$addFields:{"new":{$toLower:['$name']}}}
+])
+
+db.employee.aggregate([
+    {$match:{roll:"01"}},
+    {$addFields:{"new":{$toUpper:['$name']}}}
+])
+
+================================ 34
+db.employee.aggregate([
+    {$match:{roll:"01"}},
+    {$addFields:{"new":{$toDate:'$CreateDate'}}}
+])// createDate namer akti property thakte hobe collection er majhe 
