@@ -243,3 +243,22 @@ db.employee.aggregate([
     {$match:{roll:"01"}},
     {$addFields:{"new":{$toDate:'$CreateDate'}}}
 ])// createDate namer akti property thakte hobe collection er majhe 
+
+
+================================= 35
+db.employee.aggregate([
+
+    {$addFields:{"new":{$eq:["$roll", "01"]}}}
+    {$addFields:{"new":{$gt:["$roll", "01"]}}}
+    {$addFields:{"new":{$lt:["$roll", "01"]}}}
+
+]) // jar sathe match korbe sekhane true dibe baki sob jagai false
+
+
+=================================== 36
+db.employee.aggregate([
+    {$addFields:{"new":{$and:[{$eq:["$roll", "01"]},{$eq:["$city", "Dhaka"]}]}}}
+    {$addFields:{"new":{$or:[{$eq:["$roll", "01"]},{$eq:["$city", "bang"]}]}}}
+    {$addFields:{"new":{$not:[{$eq:["$roll", "01"]}]}}}
+
+])// condition jar sathe match korbe sekhane true dibe baki sob jagai false
